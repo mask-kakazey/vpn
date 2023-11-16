@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список веб-сайтів</title>
+    <style>
+        /* Ваші стилі для списку веб-сайтів */
+        /* Наприклад, стилізація кнопки */
+        .create-site-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-bottom: 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .create-site-link:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+        <p>Ви ввійшли як: {{ current_user.username }}</p>
+        <a href="{% url 'users:logout' %}">Вийти</a>
+    {% else %}
+        <p>Ви не увійшли в систему</p>
+        <a href="{% url 'users:login' %}">Увійти</a>
+    {% endif %}
+    <h2>Список веб-сайтів</h2>
+    <a class="create-site-link" href="{% url 'website:create' %}">Створити сайт</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Назва</th>
+                <th>URL</th>
+                <th>Clicks</th>
+                <th>Data_sent</th>
+                <th>Data_received</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for website in websites %}
+            <tr>
+                <td><a href="{{ website.get_absolute_url }}">{{ website.name }}</a></td>
+                <td>{{ website.url }}</td>
+                <td>{{ website.clicks }}</td>
+                <td>{{ website.data_sent }}</td>
+                <td>{{ website.data_received }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

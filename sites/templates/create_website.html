@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Створення нового веб-сайту</title>
+    <style>
+        /* Ваші стилі для форми створення нового веб-сайту */
+        /* Наприклад, стилізація форми */
+        form {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 300px;
+        }
+        input[type="text"], input[type="url"] {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    {% if current_user.is_authenticated %}
+        <p>Ви ввійшли як: {{ current_user.username }}</p>
+        <a href="{% url 'users:logout' %}">Вийти</a>
+    {% else %}
+        <p>Ви не увійшли в систему</p>
+        <a href="{% url 'users:login' %}">Увійти</a>
+    {% endif %}
+    <h2>Створення нового веб-сайту</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Створити</button>
+    </form>
+</body>
+</html>
